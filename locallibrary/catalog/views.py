@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from .models import Book, Author, BookInstance, Ganre
+from django.views import generic
 
 def index(request):
     num_books = Book.objects.all().count()
@@ -13,3 +14,11 @@ def index(request):
         'index.html',
         context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors, 'num_ganre_fantastic': num_ganre_fantastic, 'num_books_tolstova': num_books_tolstova},
     )
+
+
+class BookListView(generic.ListView):
+    model = Book
+    paginate_by = 10
+
+class BookDetailView(generic.DetailView):
+    model = Book
