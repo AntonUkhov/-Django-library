@@ -9,10 +9,14 @@ def index(request):
     num_authors = Author.objects.count()
     num_ganre_fantastic = Ganre.objects.filter(name__iexact='фантастика').count()
     num_books_tolstova = Book.objects.filter(title__iexact='толстова').count()
+
+    num_visits=request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits+1
+
     return render(
         request,
         'index.html',
-        context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors, 'num_ganre_fantastic': num_ganre_fantastic, 'num_books_tolstova': num_books_tolstova},
+        context={'num_books':num_books,'num_instances':num_instances,'num_instances_available':num_instances_available,'num_authors':num_authors, 'num_ganre_fantastic': num_ganre_fantastic, 'num_books_tolstova': num_books_tolstova, 'num_visits': num_visits},
     )
 
 
